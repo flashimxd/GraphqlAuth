@@ -4,7 +4,8 @@ const Survey = mongoose.model('survey');
 
 const {
     GraphQLObjectType,
-    GraphQLString
+    GraphQLString,
+    GraphQLList,
 } = graphql;
 
 const SurveyType = new GraphQLObjectType({
@@ -28,6 +29,12 @@ const SurveyType = new GraphQLObjectType({
                 .then(survey => {
                     return survey.store;
                   });
+            }
+        },
+        questions: {
+            type: new GraphQLList(require('./question_types')),
+            resolve(parentValue){
+                return Survey.findQuestions(parentValue.id);
             }
         }
     }

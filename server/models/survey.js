@@ -10,7 +10,17 @@ const SurveySchema = new Schema({
   store: {
       type: Schema.Types.ObjectId,
       ref:'store'
-  }
+  },
+  questions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'questions'
+  }]
 });
+
+SurveySchema.statics.findQuestions = function(id) {
+  return this.findById(id)
+    .populate('questions')
+    .then(survey => survey.question);
+}
 
 mongoose.model('survey', SurveySchema);

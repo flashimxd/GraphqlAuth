@@ -8,11 +8,11 @@ const {
 const UserType = require('./types/user_type');
 const StoreType = require('./types/stores_types');
 const SurveyType = require('./types/surveys_type');
+const QuestionType = require('./types/question_types');
 const AuthService = require('../services/auth');
 const StoreService = require('../services/stores');
 const SurveyService = require('../services/survey');
-
-const Survey = mongoose.model('survey');
+const QuestionService = require('../services/question');
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
@@ -65,6 +65,17 @@ const mutation = new GraphQLObjectType({
             },
             resolve(parentValue, { nps, userId, storeId }) {
                 return SurveyService.create({nps, userId, storeId});
+            }
+         },
+         createQuestion: {
+            type: QuestionType,
+            args: {
+                title: { type: GraphQLString},
+                answer: { type: GraphQLString},
+                surveyId: { type: GraphQLID},
+            },
+            resolve(parentValue, {title, answer, surveyId}) {
+                return QuestionService.create({title, answer, surveyId});
             }
          }
     }
