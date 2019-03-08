@@ -10,7 +10,7 @@ const {
 
 const SurveyType = new GraphQLObjectType({
     name: 'SurveyType',
-    fields: {
+    fields: () => ({
         id: { type: GraphQLString},
         nps: { type: GraphQLString },
         user: { 
@@ -34,10 +34,11 @@ const SurveyType = new GraphQLObjectType({
         questions: {
             type: new GraphQLList(require('./question_types')),
             resolve(parentValue){
-                return Survey.findQuestions(parentValue.id);
+                // console.log(parentValue._id);
+                return Survey.findQuestions(parentValue._id);
             }
         }
-    }
+    })
 });
 
 module.exports = SurveyType;

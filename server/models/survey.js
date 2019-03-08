@@ -18,9 +18,10 @@ const SurveySchema = new Schema({
 });
 
 SurveySchema.statics.findQuestions = function(id) {
+  console.log(id);
   return this.findById(id)
     .populate('questions')
-    .then(survey => survey.question);
+    .then(survey => survey.questions);
 }
 
 mongoose.model('survey', SurveySchema);
