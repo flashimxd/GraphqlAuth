@@ -18,7 +18,6 @@ const SurveySchema = new Schema({
 });
 
 SurveySchema.statics.findQuestions = function(id) {
-  console.log(id);
   return this.findById(id)
     .populate('questions')
     .then(survey => survey.questions);

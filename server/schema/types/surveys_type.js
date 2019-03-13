@@ -34,7 +34,6 @@ const SurveyType = new GraphQLObjectType({
         questions: {
             type: new GraphQLList(require('./question_types')),
             resolve(parentValue){
-                // console.log(parentValue._id);
                 return Survey.findQuestions(parentValue._id);
             }
         }
